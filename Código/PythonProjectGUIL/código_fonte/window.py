@@ -10,6 +10,8 @@ class MainWindow(QMainWindow):
         # setando o layout
         self.central_widget.setLayout(self.grade_Layout)
 
+        self.setCentralWidget(self.central_widget)
+
 
         #titulo
         self.setWindowTitle('Planeta Mangá')
