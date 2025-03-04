@@ -14,9 +14,7 @@ if __name__ == '__main__':
      # barra_pesquisa
      dis = display()
      dis.setPlaceholderText('pesquise aqui')
-     # Reduzindo margens e espaçamentos no layout
-     window.grade_Layout.setContentsMargins(0, 0, 0, 0)  # Remove margens
-     window.grade_Layout.setSpacing(1)  # Define o espaçamento entre widgets para 5 pixels
+   
 
 # Adicionando a barra de pesquisa
      window.grade_Layout.addWidget(dis, 0, 0, alignment=Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
