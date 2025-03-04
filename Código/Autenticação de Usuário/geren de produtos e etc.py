@@ -14,28 +14,52 @@ class ProductManagementScreen(QWidget):
         layout = QVBoxLayout()
         
         self.product_list = QListWidget()
-        self.input_field = QLineEdit()
-        self.input_field.setPlaceholderText("Nome do Produto")
+        self.input_title = QLineEdit()
+        self.input_title.setPlaceholderText("Titulo do Mangá")
         
+        self.input_autor = QLineEdit()
+        self.input_autor.setPlaceholderText("Autor")
+
+        self.input_categoria = QLineEdit()
+        self.input_categoria.setPlaceholderText("Categoria")
+
+        self.input_quantidade = QLineEdit()
+        self.input_quantidade.setPlaceholderText("Quantidade em Estoque")
+
         btn_add = QPushButton("Adicionar Produto")
         btn_add.clicked.connect(self.add_product)
         
         btn_remove = QPushButton("Remover Produto")
         btn_remove.clicked.connect(self.remove_product)
         
+        btn_back = QPushButton("Voltar")
+        btn_back.clicked.connect(lambda: self.parent().setCurrentIndex(0))
+        
         layout.addWidget(QLabel("Gerenciamento de Produtos"))
         layout.addWidget(self.product_list)
-        layout.addWidget(self.input_field)
+        layout.addWidget(self.input_title)
+        layout.addWidget(self.input_autor)
+        layout.addWidget(self.input_categoria)
+        layout.addWidget(self.input_quantidade)
         layout.addWidget(btn_add)
         layout.addWidget(btn_remove)
+        layout.addWidget(btn_back)
         
         self.setLayout(layout)
     
     def add_product(self):
-        product_name = self.input_field.text().strip()
-        if product_name:
-            self.product_list.addItem(product_name)
-            self.input_field.clear()
+        title = self.input_title.text()
+        autor = self.input_autor.text()
+        categoria = self.input_categoria.text()
+        quantidade = self.input_quantidade.text()
+
+        if title and autor and categoria and quantidade:
+            produto_info = f"{title} - {autor} ({categoria}) | Estoque: {quantidade}"
+            self.product_list.addItem(produto_info)
+            self.input_title.clear()
+            self.input_autor.clear()
+            self.input_categoria.clear()
+            self.input_quantidade.clear()
     
     def remove_product(self):
         selected_item = self.product_list.currentItem()
@@ -47,6 +71,11 @@ class OrderManagementScreen(QWidget):
         super().__init__()
         layout = QVBoxLayout()
         layout.addWidget(QLabel("Gerenciamento de Pedidos"))
+        
+        btn_back = QPushButton("Voltar")
+        btn_back.clicked.connect(lambda: self.parent().setCurrentIndex(0))
+        layout.addWidget(btn_back)
+        
         self.setLayout(layout)
 
 class ReportsScreen(QWidget):
@@ -61,10 +90,14 @@ class ReportsScreen(QWidget):
         btn_add_comment = QPushButton("Adicionar Comentário")
         btn_add_comment.clicked.connect(self.add_comment)
         
+        btn_back = QPushButton("Voltar")
+        btn_back.clicked.connect(lambda: self.parent().setCurrentIndex(0))
+        
         layout.addWidget(QLabel("Relatórios"))
         layout.addWidget(self.comment_list)
         layout.addWidget(self.comment_input)
         layout.addWidget(btn_add_comment)
+        layout.addWidget(btn_back)
         
         self.setLayout(layout)
     
@@ -73,6 +106,9 @@ class ReportsScreen(QWidget):
         if comment:
             self.comment_list.addItem(comment)
             self.comment_input.clear()
+    
+    def go_back(self):
+        self.parentWidget().setCurrentIndex(0)
 
 class MainWindow(QMainWindow):
     def __init__(self):
