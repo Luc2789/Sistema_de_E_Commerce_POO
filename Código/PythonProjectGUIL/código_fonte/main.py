@@ -36,12 +36,6 @@ if __name__ == '__main__':
      
      
      
-               
-          
-     
-          
-# Adicionando o quadro logo após a barra de pesquisa
-     
 
      window.show()
      app.exec()
