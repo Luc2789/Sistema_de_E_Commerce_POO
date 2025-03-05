@@ -202,8 +202,8 @@ class ProductManagementScreen(BaseScreen):
                 self.categories.append(category)
 
             product = Produto(len(self.products) + 1, product_data['title'],
-                              f"Descrição de {product_data['title']}", price, stock, category)
-            estoque = Estoque(len(self.products) + 1, product, stock, "Armazém 1")
+                              f"Descrição de {product_data['title']}", price, category)
+            product.estoque.atualizarQuantidade(stock)  # Usar Estoque para definir o estoque inicial
             product_ui = ProductUI(product_data['title'], product_data['author'],
                                    product_data['category'], stock, price, product)
             self.products.append(product_ui)
@@ -437,7 +437,19 @@ class CartScreen(BaseScreen):
             pedido = self.session.user.finalizarCompra(
                 Endereco(1, address, "123", "", "Bairro", "Cidade", "Estado", "12345-678"))
             if pedido:
-                order_ui = OrderUI(pedido.pedido_id, self.session.user.nome, "PENDENTE", pedido.calcularTotal(), pedido)
+                # Criar pagamento e entrega para o pedido
+                pagamento = Pagamento(1, pedido, pedido.calcularTotal(), "Cartão", "PENDENTE")
+                entrega = Entrega(1, pedido, datetime.now(), datetime.now() + datetime.timedelta(days=5), "",
+                                  "AGUARDANDO_ENVIO")
+                pedido.setPagamento(pagamento)
+                pedido.setEntrega(entrega)
+                pagamento.processarPagamento()  # Simular processamento
+                if pagamento.status_pagamento == "APROVADO":
+                    pedido.atualizarStatus("PAGO")
+                    entrega.atualizarStatusEntrega("EM_TRANSITO")
+
+                order_ui = OrderUI(pedido.pedido_id, self.session.user.nome, pedido.status, pedido.calcularTotal(),
+                                   pedido)
                 self.stacked_widget.order_screen.orders.append(order_ui)
                 self.stacked_widget.order_screen.order_list.addItem(
                     self.stacked_widget.order_screen.format_order_display(order_ui))
