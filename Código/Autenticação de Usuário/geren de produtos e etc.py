@@ -8,6 +8,7 @@ class LoginScreen(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(QLabel("Tela de Login"))
         self.setLayout(layout)
+        self.setStyleSheet("background-color:rgb(174, 88, 88)")
 
 class ProductManagementScreen(QWidget):
     def __init__(self, stacked_widget, menu_screen):
@@ -51,7 +52,11 @@ class ProductManagementScreen(QWidget):
         layout.addWidget(btn_back)
         
         self.setLayout(layout)
-    
+        self.setStyleSheet("""
+            color: black;
+            background-color: #FFFFFF;
+            QListWidget::item {color: black; }""")
+
     def add_product(self):
         title = self.input_title.text()
         autor = self.input_autor.text()
@@ -118,6 +123,10 @@ class OrderManagementScreen(QWidget):
         layout.addWidget(btn_back)
         
         self.setLayout(layout)
+        self.setStyleSheet("""
+            color: black;
+            background-color:rgb(199, 139, 139);
+            QListWidget::item {color: black; }""")
 
     def add_order(self):
         cliente = self.input_cliente.text()
@@ -191,7 +200,11 @@ class ReportsScreen(QWidget):
         layout.addWidget(btn_back)
         
         self.setLayout(layout)
-    
+        self.setStyleSheet("""
+            color: black;
+            background-color:rgb(219, 173, 173);
+            QListWidget::item {color: black; }""")
+
     def add_comment(self):
         comment = self.comment_input.text().strip()
         if comment:
@@ -208,6 +221,10 @@ class MainWindow(QMainWindow):
 
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
+        self.setStyleSheet("""
+            color: black;
+            background-color:rgb(226, 119, 119);
+            QListWidget::item {color: black; }""")
 
         self.menu_screen = self.create_main_menu()
 
@@ -223,7 +240,7 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(self.reports_screen)
 
         self.central_widget.setCurrentWidget(self.menu_screen)
-
+        
     def create_main_menu(self):
         menu_widget = QWidget()
         layout = QVBoxLayout()
