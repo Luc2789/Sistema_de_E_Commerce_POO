@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QStackedWidget, QListWidget, QLineEdit, QHBoxLayout
+from PySide6.QtCore import Qt
 import sys
 from datetime import datetime
 
@@ -125,7 +126,7 @@ class OrderManagementScreen(QWidget):
         self.setLayout(layout)
         self.setStyleSheet("""
             color: black;
-            background-color:rgb(199, 139, 139);
+            background-color: #FFFFFF;
             QListWidget::item {color: black; }""")
 
     def add_order(self):
@@ -202,7 +203,7 @@ class ReportsScreen(QWidget):
         self.setLayout(layout)
         self.setStyleSheet("""
             color: black;
-            background-color:rgb(219, 173, 173);
+            background-color: #FFFFFF;
             QListWidget::item {color: black; }""")
 
     def add_comment(self):
@@ -245,15 +246,34 @@ class MainWindow(QMainWindow):
         menu_widget = QWidget()
         layout = QVBoxLayout()
 
-        layout.addWidget(QLabel("Menu Principal"))
+        layout.addWidget(QLabel("                           Menu Principal")) # Não consegui fazer a label ficar no centro da tela
+        
 
         btn_products = QPushButton("Gerenciar Produtos")
+        btn_products.setStyleSheet("""
+            background-color: rgb(205,92,92);  
+            color: black;               
+            border-radius: 10px;        /* Bordas arredondadas */
+            padding: 10px;              /* Espaçamento interno */
+        """)
         btn_products.clicked.connect(lambda: self.central_widget.setCurrentWidget(self.product_screen))
         
         btn_orders = QPushButton("Gerenciar Pedidos")
+        btn_orders.setStyleSheet("""
+            background-color: rgb(205,92,92);  
+            color: black;               
+            border-radius: 10px;        /* Bordas arredondadas */
+            padding: 10px;              /* Espaçamento interno */
+        """)
         btn_orders.clicked.connect(lambda: self.central_widget.setCurrentWidget(self.order_screen))
         
         btn_reports = QPushButton("Relatórios")
+        btn_reports.setStyleSheet("""
+            background-color: rgb(205,92,92);  
+            color: black;               
+            border-radius: 10px;        /* Bordas arredondadas */
+            padding: 10px;              /* Espaçamento interno */
+        """)
         btn_reports.clicked.connect(lambda: self.central_widget.setCurrentWidget(self.reports_screen))
 
         layout.addWidget(btn_products)
